@@ -2,7 +2,7 @@
 
 An end-to-end e-commerce data science project that applies unsupervised machine learning to transaction logs. The project delivers interactive customer profile grouping and real-time product affinity recommendations through a professional web dashboard.
 
-🌐 **Live Streamlit App:** *(Paste your Streamlit Cloud link here once deployed)*
+🌐 **Live Streamlit App:** *([Paste your Streamlit Cloud link here once deployed](https://2ejpwy4utmgppydu6ca8mu.streamlit.app/))*
 
 ---
 
