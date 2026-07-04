@@ -150,29 +150,28 @@ st.markdown("""
 # 2. LOAD SERIALIZED ASSETS
 # -------------------------------------------------------------
 @st.cache_resource
-def load_models():
-    p_kmeans = 'models/kmeans_model.pkl'
-    p_scaler = 'models/scaler.pkl'
-    p_sim = 'models/item_similarity.pkl'
+def load_assets():
+    # This checks both 'models/filename' and 'filename' automatically
+    kmeans_path = 'models/kmeans_model.pkl' if os.path.exists('models/kmeans_model.pkl') else 'kmeans_model.pkl'
+    scaler_path = 'models/scaler.pkl' if os.path.exists('models/scaler.pkl') else 'scaler.pkl'
+    sim_path = 'models/item_similarity.pkl' if os.path.exists('models/item_similarity.pkl') else 'item_similarity.pkl'
     
-    kmeans, scaler, item_sim_df = None, None, None
-    
-    try:
-        if os.path.exists(p_kmeans):
-            with open(p_kmeans, 'rb') as f:
-                kmeans = pickle.load(f)
-        if os.path.exists(p_scaler):
-            with open(p_scaler, 'rb') as f:
-                scaler = pickle.load(f)
-        if os.path.exists(p_sim):
-            with open(p_sim, 'rb') as f:
-                item_sim_df = pickle.load(f)
-    except Exception as e:
-        st.sidebar.error(f"Data Loading Error: {e}")
+    # Check if files exist anywhere before trying to open them
+    if not os.path.exists(kmeans_path) or not os.path.exists(scaler_path) or not os.path.exists(sim_path):
+        st.error("⚠️ Model files were not detected! Please ensure kmeans_model.pkl, scaler.pkl, and item_similarity.pkl are uploaded to GitHub.")
+        st.stop()
+        
+    with open(kmeans_path, 'rb') as f:
+        kmeans = pickle.load(f)
+    with open(scaler_path, 'rb') as f:
+        scaler = pickle.load(f)
+    with open(sim_path, 'rb') as f:
+        item_sim_df = pickle.load(f)
         
     return kmeans, scaler, item_sim_df
 
-kmeans, scaler, item_sim_df = load_models()
+# Load the models securely
+kmeans, scaler, item_sim_df = load_assets()
 
 # -------------------------------------------------------------
 # 3. SIDEBAR NAVIGATION PANEL
